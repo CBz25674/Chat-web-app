@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>Friends</title>
+        <%- include("template/style") %>
+        <link rel="stylesheet" href="/css/profile.css">
+        <link rel="stylesheet" href="/css/friend.css">
+    </head>
+    <body>
+        <%- include("layout/navbar") %>
+        <% if (recieving.length > 0) { %>
+            <h1 style="margin-left: 10px;">Friend Request</h1>
+            <% recieving.forEach(user => { %>
+                <div class="user">
+                    <a class="link-to-user" href="/profile/<%= user.username %>">
+                        <img style="width: 250px; border-radius: 50%;" src="<%= user.avatar %>">
+                        <div>
+                            <h1 style="color: black; text-align: left;"><%= user.username %></h1>
+                            <form style="margin: 0;" action="/request" method="post">
+                                <input type="text" name="user" value="<%= user.username%>" hidden>
+                                <input type="text" name="action" value="acceptRequest" hidden>
+                                <button style="background-color: #27ff53; border: 0; font-size: 20px; padding: 10px; color: white; width: 250px; border-radius: 10%; margin-bottom: 10px;"><i class="fa-solid fa-check"></i> Accept</button>
+                        </form>
+                        <form style="margin: 0;" action="/request" method="post">
+                            <input type="text" name="user" value="<%= user.username%>" hidden>
+                            <input type="text" name="action" value="denyRequest" hidden>
+                            <button style="background-color: #FF0000; border: 0; font-size: 20px; padding: 10px; color: white; width: 250px; border-radius: 10%;"><i class="fa-solid fa-user-minus"></i> Deny</button>
+                        </form>
+                        </div>
+                    </a>
+                </div>
+            <% }) %>
+        <% } %>
+        <% if (friend.length > 0) { %>
+            <h1 style="margin-left: 10px;">Friend</h1>
+            <% friend.forEach(user => { %>
+                <div class="user">
+                    <a class="link-to-user" href="/profile/<%= user.username %>">
+                        <img style="width: 250px; border-radius: 50%;" src="<%= user.avatar %>">
+                        <div>
+                            <h1 style="color: black; text-align: left;"><%= user.username %></h1>
+                        <form style="margin: 0;" action="/request" method="post">
+                            <input type="text" name="user" value="<%= user.username%>" hidden>
+                            <input type="text" name="action" value="unfriend" hidden>
+                            <button style="background-color: #FF0000; border: 0; font-size: 20px; padding: 10px; color: white; width: 250px; border-radius: 10%;"><i class="fa-solid fa-user-minus"></i> Unfriend</button>
+                        </form>
+                        </div>
+                    </a>
+                </div>
+            <% }) %>
+        <% } %>
+        <% if (pending.length > 0) { %>
+            <h1 style="margin-left: 10px;">Pending Request</h1>
+            <% pending.forEach(user => { %>
+                <div class="user">
+                    <a class="link-to-user" href="/profile/<%= user.username %>">
+                        <img style="width: 250px; border-radius: 50%;" src="<%= user.avatar %>">
+                        <div>
+                            <h1 style="color: black; text-align: left;"><%= user.username %></h1>
+                            <form style="margin: 0;" action="/request" method="post">
+                                <input type="text" name="user" value="<%= user.username%>" hidden>
+                                <input type="text" name="action" value="cancelRequest" hidden>
+                                <p style="font-size: 20px; background-color: rgb(25, 7, 213); color: #fff; width: 250px; padding: 10px; border-radius: 10%;"><i class="fa-solid fa-arrow-right"></i> Pending Request</p>
+                                <button style="background-color: #ff0000; color: #fff; border: 0; font-size: 18px; padding: 10px; width: 250px; border-radius: 10%; text-align: left;"><i class="fa-solid fa-user-minus"></i> Cancel Request</button>
+                            </form>
+                        </div>
+                    </a>
+                </div>
+            <% }) %>
+        <% } %>
+    </body>
+</html>

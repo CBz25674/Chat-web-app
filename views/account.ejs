@@ -1,0 +1,36 @@
+
+
+
+<html>
+    <head>
+        <title><%= loggedin.username %></title>
+        <%- include("template/style") %>
+        <link rel="stylesheet" href="/css/profile.css">
+    </head>
+    <body>
+        <%- include("layout/navbar") %>
+        <div class="content">
+            <img src="<%- loggedin.avatar %>" alt="profile" class="profile">
+            <br>
+            <h1 class="displayname"><%= loggedin.displayname %> <a href="/edit"><i class="fa-solid fa-pen-to-square"></i></a></h1>
+            <table>
+                <tr>
+                    <td><b class="key">Username </b></td>
+                    <td><p class="value"><%= loggedin.username %></p></td>
+                    <td><a href="/user/logout" class="logout-btn" style="color: #FF0000;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></td>
+                </tr>
+                <tr>
+                    <td><b class="key">Email </b></td>
+                    <td><p class="value"><%= loggedin.email %></p></td>
+                    <td><a href="/edit/email"><i class="fa-solid fa-pen-to-square"></i> Change</a></td>
+                </tr>
+                <tr>
+                    <td><b class="key">Password </b></td>
+                    <td><p class="value">*********</p></td>
+                    <td><a href="/user/edit/password"><i class="fa-solid fa-pen-to-square"></i> Change</a></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    <%- include('template/alertScript') %>
+</html>

@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Change email</title>
+        <%- include('template/style') %>
+        <link rel="stylesheet" href="/css/form.css">
+    </head>
+    <body>
+        <form action="/user/edit/email" method="post" class="form">
+            <h1 class="header">Change Email</h1>
+            <a href="/account"><i class="fa-solid fa-user"></i> Back to account page.</a>
+            <div class="input-layout">
+                <br>
+                <label for="email" style="color: #FF0000;">*required</label><br>
+                <input id="email" name="email" placeholder="New Email" autocomplete="off" value="<%= email %>"><br><br>
+                <label for="password" style="color: #FF0000;">*required</label><br>
+                <div class="password-input">
+                    <input type="password" id="password" name="password" placeholder="Password">
+                    <button type="button" id="password-reveal" onclick="reveal('password-reveal', 'password')"><i class="fa-solid fa-eye"></i></button>
+                </div><br>
+            </div><br>
+            <button class="btn">SUBMIT</button>
+        </form>
+        <%- include('template/alertScript') %>
+    </body>
+    <script>
+        
+        function reveal(button, input) {
+            let revealButton = document.getElementById(button);
+            const password = document.getElementById(input)
+            if (password.getAttribute("type") == "password") {
+                password.setAttribute("type", "text")
+                revealButton.innerHTML = "<i class=\"fa-solid fa-eye-slash\"></i>"
+            } else {
+                password.setAttribute("type", "password")
+                revealButton.innerHTML = "<i class=\"fa-solid fa-eye\"></i>"
+            }
+        }
+    </script>
+</html>

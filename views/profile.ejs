@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title><%= profile.username %></title>
+        <%- include("template/style") %>
+        <link rel="stylesheet" href="/css/profile.css">
+    </head>
+    <body>
+        <%- include("layout/navbar") %>
+        <div class="content">
+            <img src="/<%- profile.avatar %>" alt="profile" class="profile">
+            <br>
+            <h1 class="displayname"><%= profile.displayname %> <a href="/edit"></a></h1>
+            <table>
+                <tr>
+                    <td><p class="key">Username: </p></td>
+                    <td><p class="value" style="margin-right: 10px;"><%= profile.username %></p></td>
+                    <% if (status == "yes") { %>
+                        <td><a href="/chat/<%= profile.username %>" style="color: #ffffff; border: 0; font-size: 18px; padding: 10px; background-color: #0000ff; border-radius: 10%; margin-right: 5px;"><i class="fa-solid fa-message"></i> Message</a></td>
+                        <td><form style="margin: 0;" action="/request" method="post">
+                            <input type="text" name="user" value="<%= profile.username%>" hidden>
+                            <input type="text" name="action" value="unfriend" hidden>
+                            <button style="color: #ffffff; border: 0; font-size: 18px; padding: 10px; background-color: #FF0000; border-radius: 10%;"><i class="fa-solid fa-user-minus"></i> Unfriend</button>
+                        </form></td>
+                    <% } else if (status == "sending") { %>
+                        <td><p style="background-color: #1119ff; border: 0; font-size: 18px; padding: 10px; color: #ffffff; border-radius: 10%; margin-right: 5px;"><i class="fa-solid fa-arrow-right"></i> Pending Request</p></td>
+                        <td><form style="margin: 0;" action="/request" method="post">
+                            <input type="text" name="user" value="<%= profile.username%>" hidden>
+                            <input type="text" name="action" value="cancelRequest" hidden>
+                            <button style="background-color: #ff0000; border: 0; font-size: 18px; padding: 10px; color: #ffffff; border-radius: 10%;"><i class="fa-solid fa-user-minus"></i> Cancel Request</button>
+                        </form></td>
+                    <% } else if (status == "recieving") { %>
+                        <td><form style="margin: 0;" action="/request" method="post">
+                            <input type="text" name="user" value="<%= profile.username%>" hidden>
+                            <input type="text" name="action" value="acceptRequest" hidden>
+                            <button style="background-color: #27ff53; border: 0; font-size: 18px; padding: 10px; color: #ffffff; border-radius: 10%; margin-right: 5px;"><i class="fa-solid fa-check"></i> Confirm</button>
+                        </form></td>
+                        <td><form style="margin: 0;" action="/request" method="post">
+                            <input type="text" name="user" value="<%= profile.username%>" hidden>
+                            <input type="text" name="action" value="denyRequest" hidden>
+                            <button style="background-color: #ff0000; border: 0; font-size: 18px; padding: 10px; color: #ffffff; border-radius: 10%;"><i class="fa-solid fa-user-minus"></i> Delete</button>
+                        </form></td>
+                    <% } else if (status == "no") { %>
+                        <td><form style="margin: 0;" action="/request" method="post">
+                            <input type="text" name="user" value="<%= profile.username%>" hidden>
+                            <input type="text" name="action" value="addRequest" hidden>
+                            <button style="background-color: #1119ff; border: 0; font-size: 18px; padding: 10px; color: #ffffff; border-radius: 10%;"><i class="fa-solid fa-user-plus"></i> Add Friend</button>
+                        </form></td>
+                    <% } %>
+                    
+                    
+                    
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

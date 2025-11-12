@@ -1,0 +1,45 @@
+* {
+    font-family: "Kanit", sans-serif;
+}
+html {
+    height: 100%;
+}
+body {
+    margin: 0px;
+    background-color: #e2e6e6;
+    min-height: 100%;
+}
+
+.btn {
+    width: 500px;
+    font-size: 21px;
+    border: 0px;
+    border-radius: 10px;
+    padding: 5px;
+    text-decoration: none;
+    color: #ffffff;
+    cursor:pointer;
+    background-color: #6c6cb1;
+    text-align: center;
+}
+a, a:visited {
+    text-decoration: none;
+    color: #0000ff;
+}
+input:focus {
+    outline: none;
+}
+@media (max-width:690px) {
+    .form{
+        max-width:90%;
+    }
+    .login-btn{
+        max-width: 90%;
+    }
+    .footer{
+        max-width: 90%;
+    }
+    .register-btn{
+        max-width: 90%;
+    }
+}

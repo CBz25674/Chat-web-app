@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Register</title>
+        <%- include("template/style") %>
+        <link rel="stylesheet" href="/css/form.css">
+    </head>
+    <body>
+        <form id="register-form" class="form" action="/user/register" method="post">
+            <h1 id="header" class="header">REGISTER</h1>
+            <a href="/"><i class="fa-solid fa-home"></i>Back to Home</a>
+            <div id="input" class="input-layout">
+                <br>
+                <label for="email" style="color: #FF0000;">*required</label><br>
+                <input type="text" id="email" name="email" placeholder="Email" autocomplete="off"><br><br>
+                <label for="username" style="color: #FF0000;">*required</label><br>
+                <input id="username" name="username" placeholder="Username" autocomplete="off"><br>
+                <ul>
+                    <li>Username must contain only lowercase letter, 
+                        <br>uppercase letter, number, or _</li>
+                    <li>Username must not contain whitespace</li>
+                    <li>Username must have 5 to 20 letters</li>
+
+                </ul><br>
+                <label for="password" style="color: #FF0000;">*required</label><br>
+                <div class="password-input">
+                    <input type="password" id="password" name="password" placeholder="Password">
+                    <button type="button" id="password-reveal" onclick="reveal('password-reveal', 'password')"><i class="fa-solid fa-eye"></i></button>
+                </div><br>
+                <label for="repassword" style="color: #FF0000;">*required</label><br>
+                <div class="password-input">
+                    <input type="password" id="repassword" name="repassword" placeholder="Re-Password">
+                    <button type="button" id="repassword-reveal" onclick="reveal('repassword-reveal', 'repassword')"><i class="fa-solid fa-eye"></i></button>
+                </div>
+            </div><br><br>
+            <button class="register-btn btn" type="submit">REGISTER</button>
+            <br><a href="/login" class="login-btn btn"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        </form>
+        <%- include('template/alertScript') %>
+    </body>
+    <script>
+        
+        function reveal(button, input) {
+            let revealButton = document.getElementById(button);
+            const password = document.getElementById(input)
+            if (password.getAttribute("type") == "password") {
+                password.setAttribute("type", "text")
+                revealButton.innerHTML = "<i class=\"fa-solid fa-eye-slash\"></i>"
+            } else {
+                password.setAttribute("type", "password")
+                revealButton.innerHTML = "<i class=\"fa-solid fa-eye\"></i>"
+            }
+        }
+    </script>
+</html>

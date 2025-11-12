@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <% if (pair != null) { %>
+            <title><%= pair.displayname %></title>
+        <% } else { %>
+            <title>Chat</title>
+        <% } %>
+        <%- include("template/style") %>
+        <link rel="stylesheet" href="/css/chat.css">
+    </head>
+    <body>
+        <div class="nav-side-bar">
+            <a href="/"><i class="fa-solid fa-house"></i></a>
+        </div>
+        <div class="side-bar">
+            <% if (friend.length > 0) { %>
+                <% friend.forEach(user => { %>
+                    <a href="/chat/<%= user.username %>" class="user">
+                        <img src="/<%= user.avatar %>" alt="">
+                        <p class="username"><%= user.displayname %></p>
+                    </a>
+                <% }) %>
+            <% } %>
+            
+        </div>
+        <div class="chat-header">
+            <% if (pair != null) { %>
+                <img src="\<%= pair.avatar %>" alt="">
+                <p class="username"><%= pair.displayname %></p>
+            <% } %>
+        </div>
+        <div class="chat-side">
+            <div></div>
+            <div id="chat">
+                <% if (pair == null) { %>
+                    <h1>No Chat Selected</h1>
+                <% } %>
+            </div>
+            <% if (pair != null) { %>
+                <form id="chat-form" action="" method="">
+                    <input type="text" name="msg" id="msg" autocomplete="off" placeholder="Aa" autofocus>
+                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            <% } %>   
+        </div>
+    </body>
+    <% if (pair != null) { %>
+        <script>
+            function genRoomName(username, pair) {
+                let x, y;
+                if (username[0] != pair[0]) {
+                    x = (username[0] < pair[0]) ? username : pair;
+                    y = (username[0] > pair[0]) ? username : pair;
+                } else if (username[0] == pair[0]) {
+                    if (username.length != pair.length) {
+                        x = (username.length < pair.length) ? username : pair;
+                        y = (username.length > pair.length) ? username : pair;
+                    } else if (username.length == pair.length) {
+                        for (let i = 0; i < username.length;i++) {
+                            if (username[i] != pair[i]) {
+                                x = (username[i] < pair) ? username : pair;
+                                y = (username[i] > pair) ? username : pair;
+                                break;
+                            }
+                        }
+                    }
+                }
+                return `${x}&${y}`;
+            }
+        </script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io();
+
+            let roomName = genRoomName("<%= loggedin.username %>", "<%= pair.username %>")
+            console.log(roomName);
+
+            socket.on("connect", () => {
+                console.log("connected to chat server");
+                socket.emit("joinRoom", roomName);
+                socket.on("joinedRoom", (room) => {
+                    console.log(`joined to ${room}`)
+                })
+            })
+            
+
+            const form = document.getElementById("chat-form");
+            const msg = document.getElementById("msg");
+            const chatbox = document.getElementById("chat");
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                if (msg.value) {
+                    let msgData = {
+                        from: "<%= loggedin.username %>",
+                        to: "<%= pair.username %>",
+                        content: msg.value
+                    }
+                    socket.emit("msg", msgData);
+                    msg.value = "";
+                }
+            })
+
+            socket.on("msg", msg => {
+                
+                const chat = document.createElement("p");
+                chat.textContent = msg.content;
+                if (msg.from == "<%= loggedin.username %>") {
+                    chat.setAttribute("class", "chat send");
+                } else {
+                    chat.setAttribute("class", "chat recieve");
+                }
+                chatbox.appendChild(chat);
+                console.log(msg)
+            })
+        </script>
+    <% } %>
+</html>

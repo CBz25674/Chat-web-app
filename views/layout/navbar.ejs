@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="/css/navbar.css">
+<div class="bar">
+            <div class="layout">
+                <a href="/" class="nav-btn"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="/friend" class="nav-btn"><i class="fa-solid fa-people-group"></i> Friends</a>
+                <a href="/chat" class="nav-btn"><i class="fa-solid fa-message"></i> Chat</a>
+                <form action="/find" method="post">
+                    <input name="search" id="search-bar" style="width: 500px; text-align: left;" placeholder="Search" autocomplete="off">
+                    <button class="Search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+                
+                <% if (loggedin) { %>
+                    <a href="/account" id="account"><img style="width: 60px; border-radius: 50%;" src="<%= loggedin.avatar %>" alt=""></a>
+                <% } else { %>
+                    <a href="/login" class="login-btn">Login</a>
+                <% } %>
+                
+            </div>
+        </div>

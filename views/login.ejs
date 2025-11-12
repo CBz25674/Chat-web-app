@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Login</title>
+        <%- include("template/style") %>
+        <link rel="stylesheet" href="/css/form.css">
+    </head>
+    <body>
+        
+        <form id="login-form" class="form" action="/user/login" method="post">
+            <h1 class="header">LOGIN</h1>
+            <a href="/"><i class="fa-solid fa-home"></i>Back to Home</a>
+            <div class="input-layout">
+                <br>
+                <label for="username" style="color: #FF0000;">*required</label><br>
+                <input id="username" name="username" placeholder="Username/Email" autocomplete="off" value="<%= username %>"><br><br>
+                <label for="password" style="color: #FF0000;">*required</label><br>
+                <div class="password-input">
+                    <input type="password" id="password" name="password" placeholder="Password">
+                    <button type="button" id="password-reveal" onclick="reveal()"><i class="fa-solid fa-eye"></i></button>
+                </div><br>
+            </div><br>
+            <button id="login-btn" class="login-btn btn">LOGIN</button>
+            <br>
+            <div class="footer">
+                <a href="/forget-password" id="forget-password" class="forget-btn btn"><i class="fa-solid fa-key"></i> Forgot Password</a>
+                <a href="register" id="register-btn" class="register-btn btn"><i class="fa-solid fa-circle-user"></i> Register</a>
+            </div><br><br>
+        </form>
+        <%- include('template/alertScript') %>
+        <form action="/user/login" method="post">
+            <input type="text" name="username" id="username" value="cool_boyz" hidden>
+            <input type="text" name="password" value="Coolboyz12!" hidden>
+            <button>Direct Login</button>
+        </form>
+        <form action="/user/login" method="post">
+            <input type="text" name="username" id="username" value="aon" hidden>
+            <input type="text" name="password" value="Coolboyz12!" hidden>
+            <button>Direct Login (aon)</button>
+        </form>
+    </body>
+    <script>
+        let revealButton = document.getElementById("password-reveal");
+        function reveal() {
+            const password = document.getElementById("password")
+            if (password.getAttribute("type") == "password") {
+                password.setAttribute("type", "text")
+                revealButton.innerHTML = "<i class=\"fa-solid fa-eye-slash\"></i>"
+            } else {
+                password.setAttribute("type", "password")
+                revealButton.innerHTML = "<i class=\"fa-solid fa-eye\"></i>"
+            }
+        }
+    </script>
+</html>

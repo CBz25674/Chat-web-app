@@ -1,0 +1,13 @@
+.user {
+    display: grid;
+    background-color: #d4d4d5;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.link-to-user {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 2fr 1fr;
+    color: black;
+    padding: 30px;
+}
