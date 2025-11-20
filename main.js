@@ -140,8 +140,9 @@ app.get("/profile/:username", ShowProfile);
 
 //Using token (One-time-used token)
 const activateToken = require("./modules/activateToken");
+const updateSession = require("./modules/updateSession");
 
-app.get("/token/:token", activateToken);
+app.get("/token/:token", activateToken, updateSession);
 
 //Friend Request System
 const requestSystem = require("./modules/requestSystem");

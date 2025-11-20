@@ -1,5 +1,4 @@
 const conn = require("../connection");
-const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
 module.exports = async (data) => {
@@ -16,17 +15,16 @@ module.exports = async (data) => {
             passphrase: process.env.keypassphrase
         }
     })
-    let registerQuery = `INSERT INTO \`account\` (\`username\`, \`displayname\`, \`email\`, \`password\`, \`avatar\`, \`publickey\`, \`privatekey\`) VALUES (?,?,?,?,'asset/default.jpg',?,?)`;
-    conn.query(registerQuery, [data.username, data.username, data.email, data.password, publicKey, privateKey], (error, res) => {
-        if (error) throw error;
-    });
-    
-    let userSession = {
-        username: data.username,
-        displayname: data.username,
-        email: data.email,
-        avatar: 'asset/default.jpg',
-        key: privateKey
-    };
-    return userSession;
+    let connection;
+    try {
+        connection = await conn.getConnection();
+        let registerQuery = `INSERT INTO \`account\` (\`username\`, \`displayname\`, \`email\`, \`password\`, \`avatar\`, \`publickey\`, \`privatekey\`) VALUES (?,?,?,?,'asset/default.jpg',?,?)`;
+        connection.execute(registerQuery, [data.username, data.username, data.email, data.password, publicKey, privateKey], (error, res) => {
+            if (error) throw error;
+        });
+    } catch (err) {
+        console.error(err);
+    } finally {
+        if (connection) connection.release();
+    }
 };

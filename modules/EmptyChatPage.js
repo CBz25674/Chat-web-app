@@ -16,11 +16,19 @@ module.exports = async (req, res) => {
     const friendUser = friend.map(f => {
         return [f.recieverId, f.senderId]
     }).flat();
-    const friendSql = "SELECT `username`, `displayname`, `avatar` FROM `account` WHERE `username` IN (?) AND `username` != ?";
-    conn.query(friendSql, [friendUser, req.session.user.username], (e, re, fd) => {
-        res.render("message", {
-            pair: null,
-            friend: re
-        })
-    });
+    let connection;
+    try {
+        connection = await conn.getConnection();
+        const friendSql = "SELECT `username`, `displayname`, `avatar` FROM `account` WHERE `username` IN (?) AND `username` != ?";
+        connection.execute(friendSql, [friendUser, req.session.user.username], (e, re, fd) => {
+            res.render("message", {
+                pair: null,
+                friend: re
+            })
+        });
+    } catch (err) {
+        console.error(err);
+    } finally {
+        if (connection) connection.release();
+    }
 }
